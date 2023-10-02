@@ -13,10 +13,12 @@ public class Controller {
         String nombre = console.nextLine();
 
         System.out.println("Ingrese el numero de cedula: " );
-        listaCandidato.add(new Candidato(nombre, nombre, null, 0, nombre, nombre));
+        String cedula = console.nextLine();
+
+        listaCandidato.add(new Candidato(nombre, cedula));
     }
 
     public void actualizar_candidato(){
-        
+
     }
 }
