@@ -1,23 +1,24 @@
 public class Candidato extends Ciudadano{
-    private byte Der_Izq;
-    private String partido, promesas;
-// HOLAaaaaaaaaaa
     
-    public Candidato(String nombre, String cedula, Ciudades ciudad, byte der_Izq, String partido, String promesas) {
+    private Orientacion orientacion;
+    private String partido, promesas;
+
+
+    public Candidato(String nombre, String cedula, Ciudades ciudad, Orientacion orientacion, Orientacion partido2,String promesas) {
         super(nombre, cedula, ciudad);
-        Der_Izq = der_Izq;
+        this.orientacion = orientacion;
         this.partido = partido;
         this.promesas = promesas;
+        
+    }
+
+    public Orientacion getOrientacion() {
+        return orientacion;
     }
 
 
-    public byte getDer_Izq() {
-        return Der_Izq;
-    }
-
-
-    public void setDer_Izq(byte der_Izq) {
-        Der_Izq = der_Izq;
+    public void setOrientacion(Orientacion orientacion) {
+        this.orientacion = orientacion;
     }
 
 
@@ -31,7 +32,7 @@ public class Candidato extends Ciudadano{
     }
 
 
-    public String getPromesas() {
+    public String getPromesa() {
         return promesas;
     }
 
@@ -40,7 +41,4 @@ public class Candidato extends Ciudadano{
         this.promesas = promesas;
     }
 
-    
-
-    
 }
