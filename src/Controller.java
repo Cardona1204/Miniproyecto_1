@@ -42,7 +42,7 @@ public class Controller {
     // Metodo para ver las opciones del menu :D
     private static void mostrarMenu() {
         System.out.println("----- Menú -----");
-        System.out.println("1. Crear candidatos");
+        System.out.println("1. Insertar candidatos (Se enlistaran automaticamente)");
         System.out.println("2. Actualizar candidato");
         System.out.println("3. Eliminar candidato");
         System.out.println("4. Buscar candidato");
@@ -53,6 +53,8 @@ public class Controller {
 
 
     // Metodos opcion 1 crear candidato ( solo pasar al menu crearCandidatos )
+    // Desde que se crean los datos se estan listando
+    
      private static void crearCandidatos() {
         int numCandidatos = obtenerNumeroCandidatos();
         for (int i = 0; i < numCandidatos; i++) {
