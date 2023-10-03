@@ -6,9 +6,8 @@ public class Controller {
     private ArrayList<Candidato> listaCandidato = new ArrayList<>();
 
     public void menu(){
-
         crearCandidatos();
-        eliminarCandidato();
+        buscarCandidato();
         
     }
 
@@ -174,10 +173,40 @@ public class Controller {
             System.out.println("No se encontró ningún candidato con el nombre proporcionado.");
         }
     }
+
+
+    //Metodo 4 buscar y mostrar candidato
+    private void buscarCandidato() {
+        System.out.print("Ingrese el nombre del candidato que desea buscar: ");
+        String nombreBuscar = console.nextLine();
+    
+        boolean candidatoEncontrado = false;
+    
+        for (Candidato candidato : listaCandidato) {
+            if (candidato.getNombre().equalsIgnoreCase(nombreBuscar)) {
+                candidatoEncontrado = true;
+    
+                System.out.println("Datos del candidato:");
+                System.out.println("Nombre: " + candidato.getNombre());
+                System.out.println("Cedula: " + candidato.getCedula());
+                System.out.println("Ciudad: " + candidato.getCiudad());
+                System.out.println("Orientacion politica: " + candidato.getOrientacion());
+                System.out.println("Partido político: " + candidato.getPartido());
+                System.out.println("Promesas de campaña:");
+                for (String promesa : candidato.getPromesas()) {
+                    System.out.println(" --- " + promesa);
+                }
+                System.out.println("---------------------------");
+                break; 
+        }
+        if (candidatoEncontrado == false) {
+            System.out.println("No se encontro ningún candidato con el nombre proporcionado.");
+        }
+    }
+}
     
     
 
-    
     //Metodo 5 mostrar lista de candidatos
 
     private void imprimirListaCandidatos() {
