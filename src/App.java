@@ -1,8 +1,7 @@
-import java.util.Scanner;
-
 public class App {
-
     public static void main(String[] args) {
-        Scanner console = new Scanner(System.in);
 
+        Controller controller = new Controller();
+        controller.menu();
+    }
 }

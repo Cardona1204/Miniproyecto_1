@@ -1,46 +1,39 @@
-public class Candidato extends Ciudadano{
-    private byte Der_Izq;
-    private String partido, promesas;
+import java.util.ArrayList;
 
+public class Candidato extends Ciudadano {
     
-    public Candidato(String nombre, String cedula, Ciudades ciudad, byte der_Izq, String partido, String promesas) {
+    private Orientacion orientacion;
+    private Partido partido;
+    private ArrayList<String> promesas;  
+    
+    public Candidato(String nombre, String cedula, Ciudades ciudad, Orientacion orientacion, Partido partido, ArrayList<String> promesas) {
         super(nombre, cedula, ciudad);
-        Der_Izq = der_Izq;
+        this.orientacion = orientacion;
         this.partido = partido;
         this.promesas = promesas;
     }
 
-
-    public byte getDer_Izq() {
-        return Der_Izq;
+    public Orientacion getOrientacion() {
+        return orientacion;
     }
 
-
-    public void setDer_Izq(byte der_Izq) {
-        Der_Izq = der_Izq;
+    public void setOrientacion(Orientacion orientacion) {
+        this.orientacion = orientacion;
     }
 
-
-    public String getPartido() {
+    public Partido getPartido() {
         return partido;
     }
 
-
-    public void setPartido(String partido) {
+    public void setPartido(Partido partido) {
         this.partido = partido;
     }
 
-
-    public String getPromesas() {
+    public ArrayList<String> getPromesas() {
         return promesas;
     }
 
-
-    public void setPromesas(String promesas) {
+    public void setPromesas(ArrayList<String> promesas) {
         this.promesas = promesas;
     }
-
-    
-
-    
 }
