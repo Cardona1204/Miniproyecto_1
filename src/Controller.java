@@ -6,8 +6,8 @@ public class Controller {
     private ArrayList<Candidato> listaCandidato = new ArrayList<>();
 
     public void menu(){
-        crearCandidatos();
-        imprimirListaCandidatos();
+        
+        actualizarCandidato();
         
     }
 
@@ -60,6 +60,91 @@ public class Controller {
         listaCandidato.add(new Candidato(nombre, cedula, ciudad, orientacion, partido, promesas));
     }
 
+
+    public void actualizarCandidato() {
+        System.out.print("Ingrese el nombre del candidato que desea actualizar: ");
+        String nombreBuscar = console.nextLine();
+    
+        boolean candidatoEncontrado = false;
+        for (Candidato candidato : listaCandidato) {
+            if (candidato.getNombre().equalsIgnoreCase(nombreBuscar)) {
+                candidatoEncontrado = true;
+    
+                System.out.println("Datos actuales del candidato:");
+                System.out.println("Nombre: " + candidato.getNombre());
+                System.out.println("Cédula: " + candidato.getCedula());
+                System.out.println("Ciudad: " + candidato.getCiudad());
+                System.out.println("Orientación política: " + candidato.getOrientacion());
+                System.out.println("Partido político: " + candidato.getPartido());
+                System.out.println("Promesas de campaña:");
+                for (String promesa : candidato.getPromesas()) {
+                    System.out.println(" - " + promesa);
+                }
+                System.out.println("---------------------------");
+    
+                System.out.println("Ingrese los nuevos datos para el candidato (o deje en blanco para mantener):");
+    
+                System.out.print("Nuevo nombre: ");
+                String nuevoNombre = console.nextLine();
+                if (!nuevoNombre.isEmpty()) {
+                    candidato.setNombre(nuevoNombre);
+                }
+    
+                System.out.print("Nueva cédula: ");
+                String nuevaCedula = console.nextLine();
+                if (!nuevaCedula.isEmpty()) {
+                    candidato.setCedula(nuevaCedula);
+                }
+    
+                System.out.print("Nueva ciudad: ");
+                String nuevaCiudadInput = console.nextLine();
+                if (!nuevaCiudadInput.isEmpty()) {
+                    Ciudades nuevaCiudad = Ciudades.valueOf(nuevaCiudadInput.toUpperCase());
+                    candidato.setCiudad(nuevaCiudad);
+                }
+    
+                System.out.print("Nueva orientación política (DERECHA o IZQUIERDA): ");
+                String nuevaOrientacionInput = console.nextLine();
+                if (!nuevaOrientacionInput.isEmpty()) {
+                    Orientacion nuevaOrientacion = Orientacion.valueOf(nuevaOrientacionInput.toUpperCase());
+                    candidato.setOrientacion(nuevaOrientacion);
+                }
+    
+                System.out.print("Nuevo partido político: ");
+                String nuevoPartidoInput = console.nextLine();
+                if (!nuevoPartidoInput.isEmpty()) {
+                    Partido nuevoPartido = Partido.valueOf(nuevoPartidoInput.toUpperCase());
+                    candidato.setPartido(nuevoPartido);
+                }
+    
+                System.out.print("¿Desea actualizar las promesas de campaña? (Sí/No): ");
+                String actualizarPromesasInput = console.nextLine();
+                if (actualizarPromesasInput.equalsIgnoreCase("Sí")) {
+                    System.out.print("¿Cuántas nuevas promesas de campaña tiene el candidato?");
+                    int numNuevasPromesas = console.nextInt();
+                    console.nextLine();  
+    
+                    ArrayList<String> nuevasPromesas = new ArrayList<>();
+                    for (int i = 0; i < numNuevasPromesas; i++) {
+                        System.out.println("Ingrese la promesa de campaña " + (i + 1) + ": ");
+                        String promesa = console.nextLine();
+                        nuevasPromesas.add(promesa);
+                    }
+                    candidato.setPromesas(nuevasPromesas);
+                }
+    
+                System.out.println("Datos actualizados para el candidato " + candidato.getNombre() + ".");
+                break; 
+            }
+        }
+    
+        if (candidatoEncontrado == false) {
+            System.out.println("No se encontró ningún candidato con el nombre proporcionado.");
+        }
+    }
+    
+    
+
     private void imprimirListaCandidatos() {
         int contadorCandidato =+ 1;
 
@@ -79,7 +164,4 @@ public class Controller {
         }
     }
     
-
-    public void actualizarCandidato() {
-    }
 }
