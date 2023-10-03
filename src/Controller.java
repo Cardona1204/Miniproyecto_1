@@ -3,16 +3,57 @@ import java.util.Scanner;
 
 public class Controller {
     private static Scanner console = new Scanner(System.in);
-    private ArrayList<Candidato> listaCandidato = new ArrayList<>();
+    private static ArrayList<Candidato> listaCandidato = new ArrayList<>();
 
-    public void menu(){
-        crearCandidatos();
-        buscarCandidato();
-        
+    public void menu() {
+        int opcion;
+
+        do {
+            mostrarMenu();
+            opcion = console.nextInt();
+            console.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    crearCandidatos();
+                    break;
+                case 2:
+                    actualizarCandidato();
+                    break;
+                case 3:
+                    eliminarCandidato();
+                    break;
+                case 4:
+                    buscarCandidato();
+                    break;
+                case 5:
+                    imprimirListaCandidatos();
+                    break;
+                case 0:
+                    System.out.println("Ha decidido salir del menu");
+                    break;
+                default:
+                    System.out.println("Opcion no válida. Intente nuevamente.");
+                    break;
+            }
+        } while (opcion != 0);
     }
 
+    // Metodo para ver las opciones del menu :D
+    private static void mostrarMenu() {
+        System.out.println("----- Menú -----");
+        System.out.println("1. Crear candidatos");
+        System.out.println("2. Actualizar candidato");
+        System.out.println("3. Eliminar candidato");
+        System.out.println("4. Buscar candidato");
+        System.out.println("5. Imprimir lista de candidatos");
+        System.out.println("0. Salir");
+        System.out.print("Seleccione una opcion: ");
+    }
+
+
     // Metodos opcion 1 crear candidato ( solo pasar al menu crearCandidatos )
-     private void crearCandidatos() {
+     private static void crearCandidatos() {
         int numCandidatos = obtenerNumeroCandidatos();
         for (int i = 0; i < numCandidatos; i++) {
             System.out.println("Ingresando candidato " + (i + 1) + " de " + numCandidatos);
@@ -20,14 +61,14 @@ public class Controller {
         }
     }
 
-    private int obtenerNumeroCandidatos() {
+    private static int obtenerNumeroCandidatos() {
         System.out.print("¿Cuántos candidatos quieres incluir? ");
         int numCandidatos = console.nextInt();
         console.nextLine(); 
         return numCandidatos;
     }
 
-    private void crearCandidato() {
+    private static void crearCandidato() {
         System.out.println("Ingrese el nombre del candidato: ");
         String nombre = console.nextLine();
     
@@ -62,7 +103,7 @@ public class Controller {
 
     //Metodo opcion 2 actualizar candidato
 
-    private void actualizarCandidato() {
+    private static void actualizarCandidato() {
         System.out.print("Ingrese el nombre del candidato que desea actualizar: ");
         String nombreBuscar = console.nextLine();
     
@@ -137,7 +178,7 @@ public class Controller {
 
 
     //Metodo opcion 3 eliminar candidato
-    private void eliminarCandidato() {
+    private static void eliminarCandidato() {
         System.out.print("Ingrese el nombre del candidato que desea eliminar: ");
         String nombreEliminar = console.nextLine();
         boolean candidatoEncontrado = false;
@@ -176,7 +217,7 @@ public class Controller {
 
 
     //Metodo 4 buscar y mostrar candidato
-    private void buscarCandidato() {
+    private static void buscarCandidato() {
         System.out.print("Ingrese el nombre del candidato que desea buscar: ");
         String nombreBuscar = console.nextLine();
     
@@ -205,14 +246,15 @@ public class Controller {
     }
 }
     
-    
+
 
     //Metodo 5 mostrar lista de candidatos
 
-    private void imprimirListaCandidatos() {
+    private static void imprimirListaCandidatos() {
         int contadorCandidato =+ 1;
 
         for (Candidato candidato : listaCandidato) {
+            System.out.println("---------------------------");
             System.out.println("Candidato "+contadorCandidato);
             System.out.println("Nombre: " + candidato.getNombre());
             System.out.println("Cedula: " + candidato.getCedula());
