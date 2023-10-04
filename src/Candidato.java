@@ -36,4 +36,10 @@ public class Candidato extends Ciudadano {
     public void setPromesas(ArrayList<String> promesas) {
         this.promesas = promesas;
     }
+
+    public void agregarVotos(int numeroVotos) {
+    }
+
+    public void setNumeroVotos(int numVotos) {
+    }
 }
