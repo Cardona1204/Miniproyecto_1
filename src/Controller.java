@@ -3,8 +3,7 @@ import java.util.Scanner;
 
 public class Controller {
     private static Scanner console = new Scanner(System.in);
-    private static ArrayList<Candidato> listaCandidato = new ArrayList<>();
-    private static ArrayList<String> promesas = new ArrayList<>();
+    private ArrayList<Candidato> listaCandidato = new ArrayList<>();
 
     public void menu() {
         int opcion;
@@ -19,10 +18,10 @@ public class Controller {
                     crearCandidato();
                     break;
                 case 2:
-                    actualizarCandidato();
+                    actualizarCandidato(candidato_index());
                     break;
                 case 3:
-                    eliminarCandidato();
+                    eliminarCandidato(candidato_index());
                     break;
                 case 4:
                     buscarCandidato();
@@ -41,9 +40,9 @@ public class Controller {
     }
 
     // Metodo para ver las opciones del menu :D
-    private static void mostrarMenu() {
+    private  void mostrarMenu() {
         System.out.println("----- Menú -----");
-        System.out.println("1. Insertar candidatos (Se enlistaran automaticamente)");
+        System.out.println("1. Insertar candidatos");
         System.out.println("2. Actualizar candidato");
         System.out.println("3. Eliminar candidato");
         System.out.println("4. Buscar candidato");
@@ -52,13 +51,7 @@ public class Controller {
         System.out.print("Seleccione una opcion: ");
     }
 
-
-    // Metodos opcion 1 crear candidato ( solo pasar al menu crearCandidatos )
-    // Desde que se crean los datos se estan listando
-    
-
-
-    private static void crearCandidato() {
+    private  void crearCandidato() {
         System.out.println("Ingrese el nombre del candidato: ");
         String nombre = console.nextLine();
     
@@ -77,99 +70,126 @@ public class Controller {
         String partido_ = console.nextLine();
         Partido partido = Partido.valueOf(partido_.toUpperCase());
     
-        System.out.println("¿Cuántas promesas de campaña tiene el candidato?");
-        int numPromesas = console.nextInt();
-        console.nextLine();  // Limpiar el buffer
-    
-        for (int i = 0; i < numPromesas; i++) {
-            System.out.println("Ingrese la promesa de campaña " + (i + 1) + ": ");
-            String promesa = console.nextLine();
-            promesas.add(promesa);
+
+        listaCandidato.add(new Candidato(nombre, cedula, ciudad, orientacion, partido, menu_promesas()));
+    }
+
+    private ArrayList <String> menu_promesas(){
+        ArrayList <String> promesa = new ArrayList<String>();
+        while(true){
+            System.out.println("Desea agregar una promesa? \n1- SI\n2- NO");
+            if(console.nextInt()!=1){
+        
+                break;
+            } 
+            console.nextLine();
+            System.out.println("Ingrese la propuesta: ");
+            promesa.add(console.nextLine());
         }
-
-        listaCandidato.add(new Candidato(nombre, cedula, ciudad, orientacion, partido, promesas));
+        return promesa;
     }
 
 
-    public static void datos_candidato(){
-            //NO SE SABE EXACTAMENTE SI AYUDA EN ALGO 
-            //EL PUNTO ES QUE TENGA LOS MENSAJES QUE SE LE PEDIRAN AL USUARIO
-            //Updating
-    }
-    //Metodo opcion 2 actualizar candidato
 
-    public static void actualizarCandidato() {
+    public void actualizarCandidato(int indice) {
+        if(indice == -1){
+            return;
+        }
+        Candidato candidato = listaCandidato.get(indice);
+        System.out.println("Menu de actualizacion");
+        
+
+
+        listaCandidato.set(indice, menu_cambios(candidato));
+    }
+
+    private Candidato menu_cambios(Candidato candidato){
+        byte eleccion;
+        do {
+            System.out.println("1- NOMBRE\n2- CEDULA\n3- CIUDAD\n4- ORIENTACION\n5- PARTIDO\n6- PROMESAS\n7- SALIR");
+            eleccion = console.nextByte();
+            console.nextLine();
+
+            switch (eleccion) {
+                case 1:
+                    System.out.println("Ingrese el nuevo nombre: ");
+                    candidato.setNombre(console.nextLine());
+                    break;
+                case 2:
+                    System.out.println("Ingrese la nueva cedula: ");
+                    candidato.setCedula(console.nextLine());
+                    break;
+                case 3:
+                    System.out.println("Ingrese la nueva ciudad");
+                    String ciudad_ = console.nextLine();
+                    Ciudades ciudad = Ciudades.valueOf(ciudad_.toUpperCase());
+                    candidato.setCiudad(ciudad);
+                    break;
+                case 4:
+                    System.out.println("Ingrese nueva orientacion (DERECHA o IZQUIERDA)");
+                    String orientacion_ = console.nextLine();
+                    Orientacion orientacion = Orientacion.valueOf(orientacion_.toUpperCase());
+                    candidato.setOrientacion(orientacion);
+                    break;
+                case 5:
+                    System.out.println("Ingrese el partido de su candidato");
+                    String partido_ = console.nextLine();
+                    Partido partido = Partido.valueOf(partido_.toUpperCase());
+                    candidato.setPartido(partido);
+                    break;
+                case 6:
+                    candidato.setPromesas(menu_promesas());
+                    break;
+                case 7:
+                    break;
+                default:
+                    System.out.println("Opcion no válida. Intente nuevamente.");
+                    break;
+            }
+        } while (eleccion != 7);
+
+        return candidato;
+    }
+
+    private int candidato_index(){
+        if(listaCandidato.size()==0){
+            System.out.println("No hay candidatos");
+            return -1;
+        }
         for (int i = 0; i < listaCandidato.size(); i++) {
             System.out.println((i + 1) + "- " + listaCandidato.get(i).getNombre());
         }
 
         System.out.print("Ingrese el indice del candidato que desea actualizar: ");
         short indice = console.nextShort();
-
-        crearCandidato();
-        listaCandidato.get(indice-1);
-    
-        
-                System.out.println("Datos actualizados para el candidato " + candidato.getNombre() + ".");
-                break; 
-            }
+        if(indice>0 && indice<= listaCandidato.size()){
+            return indice-1;
         }
-    
-        if (candidatoEncontrado == false) {
-            System.out.println("No se encontro ningún candidato con el nombre proporcionado.");
-        }
+        return -1;
     }
 
 
     //Metodo opcion 3 eliminar candidato
-    private static void eliminarCandidato() {
-        System.out.print("Ingrese el nombre del candidato que desea eliminar: ");
-        String nombreEliminar = console.nextLine();
-        boolean candidatoEncontrado = false;
-        Candidato candidatoAEliminar = null;
-        for (Candidato candidato : listaCandidato) {
-            if (candidato.getNombre().equalsIgnoreCase(nombreEliminar)) {
-                candidatoAEliminar = candidato;
-                candidatoEncontrado = true;
-                break;
-            }
+    private void eliminarCandidato(int indice) {
+        if(indice == -1){
+            return;
         }
-        if (candidatoEncontrado) {
-            System.out.println("Datos del candidato a eliminar:");
-            System.out.println("Nombre: " + candidatoAEliminar.getNombre());
-            System.out.println("Cedula: " + candidatoAEliminar.getCedula());
-            System.out.println("Ciudad: " + candidatoAEliminar.getCiudad());
-            System.out.println("Orientacion politica: " + candidatoAEliminar.getOrientacion());
-            System.out.println("Partido politico: " + candidatoAEliminar.getPartido());
-            System.out.println("Promesas de campaña:");
-            for (String promesa : candidatoAEliminar.getPromesas()) {
-                System.out.println(" --- " + promesa);
-            }
-            System.out.println("---------------------------");
-            System.out.print("¿Esta seguro de que desea eliminar este candidato? (Si/No): ");
-            String confirmacion = console.nextLine();
-            if (confirmacion.equalsIgnoreCase("Si")) {
-                listaCandidato.remove(candidatoAEliminar);
-                System.out.println("Candidato eliminado correctamente.");
-            } else {
-                System.out.println("Operación cancelada. El candidato no ha sido eliminado.");
-            }
-        } else {
-            System.out.println("No se encontró ningún candidato con el nombre proporcionado.");
-        }
+        Candidato candidato = listaCandidato.remove(indice);
+        System.out.print("Se ha eliminado el candidato " + candidato.getNombre());
     }
 
 
     //Metodo 4 buscar y mostrar candidato
-    private static void buscarCandidato() {
+    private void buscarCandidato() {
+        if(listaCandidato.size()==0){
+            System.out.println("No hay candidatos");
+            return;
+        }
         System.out.print("Ingrese el nombre del candidato que desea buscar: ");
         String nombreBuscar = console.nextLine();
     
-        boolean candidatoEncontrado = false;
-    
         for (Candidato candidato : listaCandidato) {
             if (candidato.getNombre().equalsIgnoreCase(nombreBuscar)) {
-                candidatoEncontrado = true;
     
                 System.out.println("Datos del candidato:");
                 System.out.println("Nombre: " + candidato.getNombre());
@@ -182,11 +202,10 @@ public class Controller {
                     System.out.println(" --- " + promesa);
                 }
                 System.out.println("---------------------------");
-                break; 
+                return; 
         }
-        if (candidatoEncontrado == false) {
-            System.out.println("No se encontro ningún candidato con el nombre proporcionado.");
-        }
+        System.out.println("No se encontro ningún candidato con el nombre proporcionado.");
+
     }
 }
     
@@ -194,12 +213,16 @@ public class Controller {
 
     //Metodo 5 mostrar lista de candidatos
 
-    private static void imprimirListaCandidatos() {
-        int contadorCandidato =+ 1;
+    private void imprimirListaCandidatos() {
+        int contadorCandidato = 1;
 
+        if(listaCandidato.size()==0){
+            System.out.println("No hay candidatos");
+            return;
+        }
         for (Candidato candidato : listaCandidato) {
             System.out.println("---------------------------");
-            System.out.println("Candidato "+contadorCandidato);
+            System.out.println("Candidato "+ contadorCandidato);
             System.out.println("Nombre: " + candidato.getNombre());
             System.out.println("Cedula: " + candidato.getCedula());
             System.out.println("Ciudad: " + candidato.getCiudad());
