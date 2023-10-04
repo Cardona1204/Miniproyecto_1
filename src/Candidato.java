@@ -4,7 +4,8 @@ public class Candidato extends Ciudadano {
     
     private Orientacion orientacion;
     private Partido partido;
-    private ArrayList<String> promesas;  
+    private ArrayList<String> promesas;
+    private int numeroVotos;  
     
     public Candidato(String nombre, String cedula, Ciudades ciudad, Orientacion orientacion, Partido partido, ArrayList<String> promesas) {
         super(nombre, cedula, ciudad);
@@ -12,6 +13,7 @@ public class Candidato extends Ciudadano {
         this.partido = partido;
         this.promesas = promesas;
     }
+    
 
     public Orientacion getOrientacion() {
         return orientacion;
@@ -37,9 +39,11 @@ public class Candidato extends Ciudadano {
         this.promesas = promesas;
     }
 
-    public void agregarVotos(int numeroVotos) {
+    public void setNumeroVotos(int numVotos) {
+        this.numeroVotos = numVotos;
     }
 
-    public void setNumeroVotos(int numVotos) {
+    public int getNumeroVotos() {
+        return numeroVotos;
     }
 }

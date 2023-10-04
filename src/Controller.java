@@ -28,6 +28,7 @@ public class Controller {
                     break;
                 case 5:
                     imprimirListaCandidatos();
+                    break;
                 case 6:
                     menuVotos();
                     break;
@@ -163,7 +164,7 @@ public class Controller {
             System.out.println((i + 1) + "- " + listaCandidato.get(i).getNombre());
         }
 
-        System.out.print("Ingrese el indice del candidato que desea actualizar: ");
+        System.out.print("Ingrese el indice del candidato que desea actualizar/eliminar: ");
         short indice = console.nextShort();
         if(indice>0 && indice<= listaCandidato.size()){
             return indice-1;
@@ -178,7 +179,7 @@ public class Controller {
             return;
         }
         Candidato candidato = listaCandidato.remove(indice);
-        System.out.print("Se ha eliminado el candidato " + candidato.getNombre());
+        System.out.print("Se ha eliminado el candidato " + candidato.getNombre()+"\n");
     }
 
 
@@ -231,6 +232,7 @@ public class Controller {
             System.out.println("Ciudad: " + candidato.getCiudad());
             System.out.println("Orientación politica: " + candidato.getOrientacion());
             System.out.println("Partido politico: " + candidato.getPartido());
+            System.out.println("Numero de votos: " + candidato.getNumeroVotos());
             System.out.println("Promesas de campaña:");
             for (String promesa : candidato.getPromesas()) {
                 System.out.println(" --- " + promesa);
@@ -257,18 +259,21 @@ public class Controller {
                     ingresarVotos();
                     break;
                 case 2:
-                    mostrarMenu();
+                    break;
+                case 3:
+                    menu();
                     break;
                 default:
                     System.out.println("Opcion no válida. Intente nuevamente.");
                     break;
             }
-        } while (opcion != 2);
+        } while (opcion != 3);
     }
                 private  void mostrarMenu2() {
         System.out.println("----- Menú ingresar votos-----");
         System.out.println("1. Insertar votos a candidato");
-        System.out.println("2. Volver al menu anterior");
+        System.out.println("2. Imprimir resultados");
+        System.out.println("3. Volver al menu anterior");
 
     }
 
@@ -283,22 +288,21 @@ public class Controller {
             System.out.println((i + 1) + ". " + listaCandidato.get(i).getNombre());
         }
     
-        System.out.print("Seleccione el candidato al cual desea ingresar votos: ");
-        int indiceCandidato = console.nextInt();
+        System.out.print("Seleccione el indice del candidato al cual desea ingresar votos: ");
+        int indice = console.nextInt();
         console.nextLine();
     
-        if (indiceCandidato < 1 || indiceCandidato > listaCandidato.size()) {
+        if (indice < 1 || indice > listaCandidato.size()) {
             System.out.println("Selección de candidato no valida.");
             return;
         }
 
-        System.out.print("Ingrese el numero de votos para el candidato" + listaCandidato.get(indiceCandidato - 1).getNombre() + ": ");
+        System.out.print("Ingrese el numero de votos para el candidato " + listaCandidato.get(indice - 1).getNombre() + ": ");
         int numVotos = console.nextInt();
         console.nextLine();
 
-        listaCandidato.get(indiceCandidato - 1).setNumeroVotos(numVotos);
-        System.out.println("Numero de votos actualizado para el candidato" + listaCandidato.get(indiceCandidato - 1).getNombre() + ": " + numVotos);
+        listaCandidato.get(indice - 1).setNumeroVotos(numVotos);
+        System.out.println("Numero de votos actualizado para el candidato " + listaCandidato.get(indice - 1).getNombre() + ": " + numVotos);
     }
-        
-        }
+}
     
