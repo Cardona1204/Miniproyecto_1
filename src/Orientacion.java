@@ -1,3 +1,2 @@
 public enum Orientacion{
-    DERECHA,IZQUIERDA
-}
+    DERECHA,IZQUIERDA}
