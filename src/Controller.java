@@ -1,5 +1,9 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 public class Controller {
     private static Scanner console = new Scanner(System.in);
     private ArrayList<Candidato> listaCandidato = new ArrayList<>();
@@ -9,7 +13,8 @@ public class Controller {
         listaCandidato.add(new Candidato("Candidato1", "123456789", Ciudades.ALCALA, Orientacion.DERECHA, Partido.MOVIMIENTO_FUERZA_CIUDADANA, new ArrayList<>()));
         listaCandidato.add(new Candidato("Candidato2", "987654321", Ciudades.ALCALA, Orientacion.DERECHA, Partido.INDEPENDIENTES, new ArrayList<>()));
         listaCandidato.add(new Candidato("Candidato3", "555555555", Ciudades.ALCALA, Orientacion.DERECHA, Partido.INDEPENDIENTES, new ArrayList<>()));
-    }
+        listaCandidato.add(new Candidato("Candidato2", "987654321", Ciudades.TORO, Orientacion.DERECHA, Partido.INDEPENDIENTES, new ArrayList<>()));
+        }
     public void menu() {
         int opcion;
 
@@ -39,6 +44,8 @@ public class Controller {
                 case 0:
                     System.out.println("Ha decidido salir del menu");
                     winner();
+                    amount_partido();
+                    cities();
                     break;
                 default:
                     System.out.println("Opcion no válida. Intente nuevamente.");
@@ -303,7 +310,43 @@ public class Controller {
             }
             ver_candidato(listaCandidato.get(0));
         }
+
+    private void amount_partido(){
+
+        Map<Partido, Long> conteoPartidos = listaCandidato.stream()
+                .collect(Collectors.groupingBy(Candidato::getPartido, Collectors.counting()));
+
+        Optional<Map.Entry<Partido, Long>> partidoConMasCandidatos = conteoPartidos.entrySet().stream()
+                .max(Map.Entry.comparingByValue());
+
+        partidoConMasCandidatos.ifPresent(entry -> {
+            Partido partido = entry.getKey();
+            long candidatosEnPartido = entry.getValue();
+            System.out.println("El partido con más candidatos es: " + partido + " con " + candidatosEnPartido + " candidatos.");
+        });
+
+        if (!partidoConMasCandidatos.isPresent()) {
+            System.out.println("No se encontraron candidatos.");
+        }
     }
-        
-        
-    
+
+    public void cities (){
+        Map<Ciudades, Long> conteoCiudades = listaCandidato.stream()
+                .collect(Collectors.groupingBy(Candidato::getCiudad, Collectors.counting()));
+
+        List<Map.Entry<Ciudades, Long>> ciudadesConMenosCandidatos = conteoCiudades.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .limit(3)
+                .collect(Collectors.toList());
+
+        System.out.println("Top 3 de ciudades con menos candidatos:");
+        ciudadesConMenosCandidatos.forEach(entry -> {
+            Ciudades ciudad = entry.getKey();
+            long candidatosInscritos = entry.getValue();
+            System.out.println(ciudad + ": " + candidatosInscritos + " candidatos");
+        });
+      
+    }
+
+
+    }
